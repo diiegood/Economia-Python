@@ -1,0 +1,58 @@
+#segunda practica econometria python.
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import random
+import statsmodels.formula.api as stm
+from statsmodels.graphics.regressionplots import abline_plot
+import requests #para leer un codigo de una pagina
+from io import StringIO #para convertir un contenido de un dataframe a pandas
+
+#para cargar una pagina web con los datos
+consumo = pd.read_csv('https://raw.githubusercontent.com/vmoprojs/DataLectures/master/GA/Tabla3_2.csv', sep = ';',decimal = '.')
+
+   
+media_x = np.mean(consumo["X"]) #se calcula de la variable x el consumo
+media_y = np.mean(consumo["Y"]) #se calcula de la variable y el consumo
+
+numero_filas = consumo.shape[0] #para ppder ver el numero de filas del array
+#tiene 10 filas 
+
+#para calcular la suma de los cuadrados de lso valores de un data frame se usa pandas
+suma_cuadrados_x = np.sum( consumo['X'] * consumo['X'])
+suma_x_y = np.sum(consumo['X']* consumo['Y'])
+
+#para calcular el coeficiente de regresion Beta 1  (regresion simple)
+beta_som = (suma_x_y - numero_filas * media_x * media_y ) / (suma_cuadrados_x - numero_filas * (media_x ** 2)) 
+#para calcular la beta 0 que es el intercepto de ecuacion de regresion simple (valor y cuando x = 0)
+alpha_som = media_y - beta_som * media_x
+#alpha_som > 0 linea regresiva tiene valor positivo / aplha_som < 0 linea valor negativo / alpha_som = 0 linea pasa por el origen
+(alpha_som , beta_som)
+
+#alpha_som = intercepto de la Bo (recta de la regresion)
+#beta_som = coeficiente de la pendiente de B1 (beta 1)
+#Y = Bo + B1 X  (ecuacion de la regresion)
+
+#para hacer un modelo de regresion lineal, donde Y es dependiente de X , de los datos de consumo
+regresion1 =  stm.ols('Y~X', data = consumo)
+print(regresion1.fit().summary()) #para ver los resultados del modelo de regresion.
+
+"Como leer los resultados"
+
+"Durbin Watson"
+
+"F estadistico"
+
+"Prob F estadistico"
+
+"Residuos"
+
+"Covarianza"
+
+"Jarque Bera"
+
+"Omnibus"
+
+
+
+
